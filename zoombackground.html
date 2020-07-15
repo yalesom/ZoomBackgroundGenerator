@@ -36,7 +36,7 @@
                         <input type="text" id="first" placeholder="firstname" tabindex="1">
                     </td>
                     <td rowspan="2" align="center">
-                        <button id="createimage" tabindex="3">Save Image</button>
+                        <button id="createimage" tabindex="4">Save Image</button>
 
                         <div id="ratioOptions">
                             <input type="radio" id="optionHD" name="imageStyle" value="HD" checked="checked">
@@ -57,7 +57,14 @@
                         <input type="text" id="last" placeholder="lastname" tabindex="2">
                     </td>
                 </tr>
-             
+				<tr>
+                    <th>
+                        Pronouns:
+                    </th>
+                    <td>
+                        <input type="text" id="pronouns" placeholder="pronouns" tabindex="3">
+                    </td>
+                </tr>
             </table>
            
         </p>
@@ -85,7 +92,7 @@
         $imgs,
         $placeLeft, $placeRight,
 
-        $nameTxt, $first, $last,
+        $nameTxt, $first, $last, $pronouns,
         $radialParm;
 
 
@@ -108,6 +115,7 @@
 
         $first =document.getElementById('first');
         $last = document.getElementById('last');
+		$pronouns = document.getElementById('pronouns');
 
         //$placeLeft = document.getElementById('placeLeft');
         //$placeRight = document.getElementById('placeRight');
@@ -118,15 +126,19 @@
         var urlParams = new URLSearchParams(queryString);
         var firstVal  = urlParams.get('first');
         var lastVal = urlParams.get('last');
+		var pronounsVal = urlParams.get('pronouns');
+
         $radialParm = urlParams.get('r');
 
         if (firstVal){$first.value = firstVal};
         if (lastVal){$last.value = lastVal};
+		if (pronounsVal){$pronouns.value = pronounsVal};
+
 
 
         bind();
 
-        if (firstVal && lastVal){
+        if (firstVal && lastVal && pronounsVal){
             updateImage();
         }
     }
@@ -184,6 +196,9 @@
         $first.oninput = function (e) {
             updateImage();
         }
+		$pronouns.oninput = function (e) {
+            updateImage();
+        }
 
         $option43.oninput = function (e) {
             updateImage();
@@ -228,6 +243,7 @@
 
         var firstLineBase = 160;
         var secondLineBase = 280;
+		var thirdLineBase = 440;
 
 
        
@@ -247,6 +263,7 @@
            // ctx.fillText($first.value, rightMargin+30, firstLineBase, maxWidth );
             ctx.font = "bold 100px franklin-gothic-urw,Arial";
             ctx.fillText($last.value, w - maxWidth - rightMargin, secondLineBase, maxWidth );
+			ctx.fillText($pronouns.value, w - maxWidth - rightMargin, thirdLineBase, maxWidth );
 
            // ctx.fillText($last.value,  rightMargin+30, secondLineBase, maxWidth );
 
