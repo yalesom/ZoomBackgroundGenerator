@@ -1,0 +1,368 @@
+
+<!doctype html>
+<html>
+<head>
+    <title>Zoom Virtual Background Generator</title>
+    <meta charset="utf-8" />
+    <script src="canvas2image.js"></script>
+    <script src="https://use.typekit.net/xsl4fab.js" type="text/javascript"></script>
+    <script type="text/javascript">/*<![CDATA[*/try{Typekit.load({ async: false });}catch(e){}/*]]>*/</script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+
+<div class="doc">
+    <h1>Zoom Virtual Background Generator</h1>
+
+    <canvas width="1920" height="1080" id="cvshd"></canvas>
+    <canvas width="1600" height="1200" id="cvs"></canvas>
+
+    <p>
+        This tool has been created to enable Darden students to generate an approved virtual background to use in classroom Zoom sessions.  
+        Your name is intended to be highly visible even when other participants are using a grid like view of the classroom.  
+        When using this background please situate yourself in such a way to minimize overlap with the name, which will always stay in a minimal one-third area of the top corner of your screen.
+        Note: it does not matter if you use the "Mirror" option within Zoom.  The text will always display correctly to other participants.
+    </p>
+
+    <div>
+        <p>
+            <table>
+                <tr>
+                    <th>
+                        First Name: 
+                    </th>
+                    <td>
+                        <input type="text" id="first" placeholder="firstname" tabindex="1">
+                    </td>
+                    <td rowspan="2" align="center">
+                        <button id="createimage" tabindex="3">Save Image</button>
+
+                        <div id="ratioOptions">
+                            <input type="radio" id="optionHD" name="imageStyle" value="HD" checked="checked">
+                            <label for="optionHD">HD</label>
+                            <input type="radio" id="option43" name="imageStyle" value="43">
+                            <label for="option43">4:3</label>
+                            <div id="ratioTooltip">Leave the ratio as HD by default.  ONLY choose 4:3 if you are  
+                                                   using the lower ratio video in Zoom and your name is being cut off.
+                            </div>
+                       </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Last Name:
+                    </th>
+                    <td>
+                        <input type="text" id="last" placeholder="lastname" tabindex="2">
+                    </td>
+                </tr>
+             
+            </table>
+           
+        </p>
+
+    </div>
+    
+    <div id="imgs" width="800" height="600">
+        
+    </div>
+    <div id="explanation" style="display:none">
+        <p>
+        After you are happy with your new virtual background use the "Save" button to save it to your local machine. Set it as your virtual background in your Zoom settings. 
+        (<a href="howto.html">How do I set a virtual background in Zoom?</a>)
+        </p>
+    </div>
+    <a id="downloadlink" download="zoombackground.jpg" href="">Download Background</a>
+
+
+    
+
+</div>
+<script>
+    var canvas, canvashd, ctxorig, ctxhd,
+        $createhd, $createorig, $createimage, $optionHD, $option43,
+        $imgs,
+        $placeLeft, $placeRight,
+
+        $nameTxt, $first, $last,
+        $radialParm;
+
+
+
+    function init () {
+        canvas = document.getElementById('cvs');
+        canvashd = document.getElementById('cvshd');
+
+
+        ctxorig = canvas.getContext('2d');
+        ctxhd = canvashd.getContext('2d');
+
+       
+        $createimage = document.getElementById('createimage');
+        $optionHD = document.getElementById('optionHD');
+        $option43 = document.getElementById('option43');
+
+
+        $imgs = document.getElementById('imgs');
+
+        $first =document.getElementById('first');
+        $last = document.getElementById('last');
+
+        //$placeLeft = document.getElementById('placeLeft');
+        //$placeRight = document.getElementById('placeRight');
+
+
+
+        var queryString = window.location.search;
+        var urlParams = new URLSearchParams(queryString);
+        var firstVal  = urlParams.get('first');
+        var lastVal = urlParams.get('last');
+        $radialParm = urlParams.get('r');
+
+        if (firstVal){$first.value = firstVal};
+        if (lastVal){$last.value = lastVal};
+
+
+        bind();
+
+        if (firstVal && lastVal){
+            updateImage();
+        }
+    }
+
+
+    function drawHD(){
+        draw(ctxhd, 1920, 1080);
+            document.getElementById('explanation').style="display:block";
+
+            var type = 'jpg',
+                w = 1920,
+                h = 1080;
+            $imgs.innerHTML = '';
+            $imgs.appendChild(Canvas2Image.convertToImage(canvashd, w, h, type))
+    }
+
+
+    function draw43(){
+        draw(ctxorig, 1600, 1200);
+            document.getElementById('explanation').style="display:block";
+
+
+            var type = 'jpg',
+                w = 1600,
+                h = 1200;
+            $imgs.innerHTML = '';
+            $imgs.appendChild(Canvas2Image.convertToImage(canvas, w, h, type))
+    }   
+
+    function updateImage(){
+        if ($optionHD.checked){
+            drawHD();
+        }else{
+            draw43();
+        }
+
+    }
+
+
+    function bind () {
+
+        $createimage.onclick = function (e) {
+            updateImage();
+            if ($optionHD.checked){
+                Canvas2Image.saveAsImage(canvashd, 1920, 1080, 'jpg');
+            }else {
+                Canvas2Image.saveAsImage(canvas, 1600, 1200, 'jpg');
+
+            }
+        }
+
+        $last.oninput = function (e) {
+            updateImage();
+        } 
+        $first.oninput = function (e) {
+            updateImage();
+        }
+
+        $option43.oninput = function (e) {
+            updateImage();
+        }
+        $optionHD.oninput = function (e) {
+            updateImage();
+        }
+
+
+    }
+
+
+
+    function draw(ctx, w, h) {
+
+        // simplified version, but does first name bigger
+
+        // another option, "spotlight" radial gradient
+        var radialGrd = ctx.createRadialGradient(w/2, h*.9, 400, w/2, h*.9, h);
+        radialGrd.addColorStop(0, "#A5ACAF");
+        radialGrd.addColorStop(1, "#232D4B"); 
+
+        ctx.fillStyle = radialGrd;
+        ctx.fillRect(0,0,w,h);
+
+
+        
+        ctx.fillStyle = '#ffffff';
+        ctx.font = "bold 150px franklin-gothic-urw,Arial";
+
+        var rightMargin = 50;
+        var topMargin = 50;
+        var verticalLineWidth = 8;
+        
+        var firstMeasurement = ctx.measureText($first.value).width;
+
+        // last name will be smaller
+        ctx.font = "bold 100px franklin-gothic-urw,Arial";
+
+        var lastMeasurement = ctx.measureText($last.value).width;
+        var maxWidth = firstMeasurement > lastMeasurement ? firstMeasurement : lastMeasurement;
+
+        var firstLineBase = 160;
+        var secondLineBase = 280;
+
+
+       
+
+           
+            //maxWidth = w*.36;
+            if (maxWidth > (w*.36)){
+                maxWidth = w*.36;
+            }
+           
+           
+            ctx.font = "bold 150px franklin-gothic-urw,Arial";
+
+
+            ctx.fillText($first.value, w - maxWidth - rightMargin, firstLineBase, maxWidth );
+
+           // ctx.fillText($first.value, rightMargin+30, firstLineBase, maxWidth );
+            ctx.font = "bold 100px franklin-gothic-urw,Arial";
+            ctx.fillText($last.value, w - maxWidth - rightMargin, secondLineBase, maxWidth );
+
+           // ctx.fillText($last.value,  rightMargin+30, secondLineBase, maxWidth );
+
+            ctx.fillStyle = '#E57200'; //uva orange
+            ctx.fillRect(w - maxWidth - 80, topMargin, verticalLineWidth, secondLineBase - 30);
+
+           // ctx.fillRect(rightMargin, topMargin, verticalLineWidth, secondLineBase - 30);
+
+
+            
+
+           
+        
+ 
+
+    }
+
+    
+
+    function draw_saved (ctx, w, h) {
+
+
+        var gradientMode = 'radial';
+
+        // gradient from Jefferson Blue to Black... and then back to blue ... top to bottom. 
+        var grd = ctx.createLinearGradient(0,0,0,h);
+        grd.addColorStop(0,"#232D4B");
+        grd.addColorStop(0.8,"#000000");
+        grd.addColorStop(1,"#232D4B");
+
+        // another option, "spotlight" radial gradient
+        var radialGrd = ctx.createRadialGradient(w/2, h*.9, 400, w/2, h*.9, h);
+        radialGrd.addColorStop(0, "#A5ACAF");
+        radialGrd.addColorStop(1, "#232D4B"); 
+
+        // Fill with gradient
+        if (gradientMode == 'radial'){
+            ctx.fillStyle = radialGrd;
+
+        }else {
+            ctx.fillStyle = grd;
+
+        }
+        ctx.fillRect(0,0,w,h);
+
+
+        // This was the orginal, solid blue
+        //ctx.fillStyle = '#232D4B'; // uva blue
+        //ctx.fillRect(0, 0, w, h);
+        
+        ctx.fillStyle = '#ffffff';
+        ctx.font = "bold 140px franklin-gothic-urw,Arial";
+
+        var rightMargin = 50;
+        var topMargin = 50;
+        var verticalLineWidth = 8;
+        
+        var firstMeasurement = ctx.measureText($first.value).width;
+        var lastMeasurement = ctx.measureText($last.value).width;
+        var maxWidth = firstMeasurement > lastMeasurement ? firstMeasurement : lastMeasurement;
+
+        var firstLineBase = 150;
+        var secondLineBase = 300;
+
+
+        // if we only have a first name then we will just use one line
+        if ($last.value.length == 0){
+            ctx.fillText($first.value, rightMargin+30, firstLineBase, w - (rightMargin*2) );
+
+            ctx.fillStyle = '#E57200'; //uva orange
+            ctx.fillRect(rightMargin, topMargin, verticalLineWidth, firstLineBase-30);
+
+
+        }else{
+
+            if (maxWidth > (w*.36)){
+
+                ctx.font = "bold 120px franklin-gothic-urw,Arial";
+                firstMeasurement = ctx.measureText($first.value).width;
+                lastMeasurement = ctx.measureText($last.value).width;
+                maxWidth = firstMeasurement > lastMeasurement ? firstMeasurement : lastMeasurement;
+
+                firstLineBase = 125;
+                secondLineBase = 250;
+            }
+
+            
+
+            if (maxWidth > (w*.36)){
+                maxWidth = w*.36;
+            }
+
+            var switchShoulder = true; //document.getElementById('placeLeft').checked;
+
+            if (switchShoulder){
+
+                ctx.fillText($first.value, rightMargin+30, firstLineBase, maxWidth );
+                ctx.fillText($last.value,  rightMargin+30, secondLineBase, maxWidth );
+
+                ctx.fillStyle = '#E57200'; //uva orange
+                ctx.fillRect(rightMargin, topMargin, verticalLineWidth, secondLineBase - 30);
+
+            }else{
+                ctx.fillText($first.value, w - maxWidth - rightMargin, firstLineBase, maxWidth );
+                ctx.fillText($last.value, w - maxWidth - rightMargin, secondLineBase, maxWidth );
+
+                ctx.fillStyle = '#E57200';
+                ctx.fillRect(w - maxWidth - 80, topMargin, verticalLineWidth, secondLineBase - 30);
+            }
+        }
+ 
+
+    }
+    
+    
+    onload = init;
+</script>
+</body>
+</html>

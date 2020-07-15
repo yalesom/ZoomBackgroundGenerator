@@ -1,0 +1,95 @@
+ .doc {
+            margin: 0 auto;
+            width: 800px;
+        }
+        canvas {
+            display: block;
+            border: 2px solid #888;
+        }
+        #cvshd, #cvs, #downloadlink {
+            display: none;
+
+        }
+        
+        button, .button {
+            background-color: #141e3c;
+            border-width: 1px;
+            border-color: #141e3c;
+            font-weight: 700;
+            font-family: franklin-gothic-urw,arial,sans-serif;
+            line-height: 1;
+            text-decoration: none;
+            padding: .9375rem 1.5625rem;
+            border-radius: 9999px;
+            font-size: 1rem;
+            text-align: left;
+            color: #fff;
+            transition: all .3s ease;
+            width: auto;
+            white-space: nowrap;
+            display: inline-block;
+        }
+        button.default:hover, button:hover, .button:hover {
+            background: #ea7b00;
+            color: #fff;
+        }
+        input[type=text] {
+            background: #fff;
+            border: 1px solid #999;
+            font-family: franklin-gothic-urw,arial,sans-serif;
+            font-size: 18px;
+            padding: 2px 3px;
+            vertical-align: baseline;
+            height: 40px;
+            min-width: 300px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            border: 1px solid #c2c2c2;
+            box-shadow: 1px 1px 4px #ebebeb;
+            -moz-box-shadow: 1px 1px 4px #ebebeb;
+            -webkit-box-shadow: 1px 1px 4px #ebebeb;
+            border-radius: 3px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            margin-bottom:8px;
+        }
+        body {
+            color: #232d4b;
+            font-size: 18px;
+            font-family: franklin-gothic-urw,arial,sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 42px;
+            text-align: center;
+        }
+        #imgs {
+            margin-left: 100px;
+        }
+        #imgs img {
+            width:600px;
+        }
+        table
+         {
+            width: 100%;
+            border: 4px solid #232d4b;
+            border-radius: 16px;
+            padding: 8px;
+        }
+        #ratioOptions:hover #ratioTooltip { 
+            display: block;
+        }
+        #ratioTooltip {
+            display: none;  
+            background: #C8C8C8;
+            margin-left: 20px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1000;
+            width:200px;
+            height:100px;
+            font-size:16px;
+            border-radius:12px;
+        }
