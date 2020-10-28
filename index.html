@@ -296,25 +296,41 @@
         if ($background.value === "blue") {
             ctx.fillStyle = '#000440';
             ctx.fillRect(0,0,w,h);
+
+            // font color
+            ctx.fillStyle = '#ffffff';
         }
 
         if ($background.value === "blue_gradient") {
             ctx.drawImage($blue_gradient, 0, 0, w, h);
+
+            // font color
+            ctx.fillStyle = '#000440';
         }
 
         if ($background.value === "blue_facade") {
             ctx.drawImage($blue_facade, 0, 0, w, h);
+
+            // font color
+            ctx.fillStyle = '#ffffff';
         }
 
         if ($background.value === "evanshall_facade") {
             ctx.drawImage($evanshall_facade, 0, 0, w, h);
+
+            // font color
+            ctx.fillStyle = '#000440';
         }
 
         if ($background.value === "evanshall_fisheye") {
             ctx.drawImage($evanshall_fisheye, 0, 0, w, h);
+
+            // font color
+            ctx.fillStyle = '#000440';
         }
 
-        ctx.fillStyle = '#ffffff';
+        // font color
+        //ctx.fillStyle = '#ffffff';
         ctx.font = "bold 150px 'NeueHaasUnicaPro',Arial";
 
         var rightMargin = 50;
