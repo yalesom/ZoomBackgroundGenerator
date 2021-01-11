@@ -103,6 +103,7 @@
                         <select id="logo">
                             <option value="logo_som">Yale SOM</option>
                             <option value="logo_gnam">GNAM</option>
+                            <option value="logo_none">No Logo</option>
                         </select>
                     </td>
                 </tr>
@@ -367,8 +368,8 @@
         //ctx.fillStyle = '#ffffff';
         ctx.font = "60px 'NeueHaasUnicaPro',Arial";
 
-        var rightMargin = 50;
-        var topMargin = 50;
+        //var rightMargin = 50;
+        //var topMargin = 50;
         var verticalLineWidth = $cohort.value === "none" ? 0 : 60;
         
         //var firstMeasurement = ctx.measureText($first.value).width;
@@ -385,9 +386,11 @@
         //var maxWidth = Math.max(firstMeasurement, lastMeasurement, pronounMeasurement)
         var maxWidth = 1200
 
-        var firstLineBase = $logo.value == "logo_gnam" ? 160 : 270;
-        var secondLineBase = $logo.value == "logo_gnam" ? 250 : 360;
-		var thirdLineBase = $logo.value == "logo_gnam" ? 320 : 430;
+        var firstLineBase = $logo.value == "logo_gnam" || $logo.value == "logo_none" ? 160 : 270;
+        var secondLineBase = $logo.value == "logo_gnam" || $logo.value == "logo_none" ? 250 : 360;
+        var thirdLineBase = $logo.value == "logo_gnam" || $logo.value == "logo_none" ? 320 : 430;
+        
+        var leftMargin = $logo.value == "logo_none" ? 100 : 330;
            
         //maxWidth = w*.36;
         /*if (maxWidth > (w*.36)){
@@ -396,13 +399,13 @@
         
         
         ctx.font = "bold 120px 'NeueHaasUnicaPro',Arial";
-        ctx.fillText($first.value, 330 + verticalLineWidth, firstLineBase, maxWidth );
+        ctx.fillText($first.value, leftMargin + verticalLineWidth, firstLineBase, maxWidth );
 
         ctx.font = "bold 70px 'NeueHaasUnicaPro',Arial";
-        ctx.fillText($last.value, 330 + verticalLineWidth, secondLineBase, maxWidth );
+        ctx.fillText($last.value, leftMargin + verticalLineWidth, secondLineBase, maxWidth );
 
         ctx.font = "50px 'NeueHaasUnicaPro',Arial"
-        ctx.fillText($pronouns.value, 330 + verticalLineWidth, thirdLineBase, maxWidth );
+        ctx.fillText($pronouns.value, leftMargin + verticalLineWidth, thirdLineBase, maxWidth );
 
         if ($cohort.value !== "none") {
             ctx.fillStyle = $cohort.value;
