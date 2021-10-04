@@ -120,6 +120,7 @@ h1 {
 }
 #imgs img {
     width:600px;
+    border: 1px solid #ccc;
 }
 table
     {
