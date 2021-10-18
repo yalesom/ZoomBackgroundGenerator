@@ -421,7 +421,7 @@
 
         if ($background.value !== "emba_white" && $background.value !== "emba_blue") {
             var verticalLineWidth = $cohort.value === "none" ? 0 : 60;
-            var maxWidth = 1200
+            //var maxWidth = 1200
 
             var firstLineBase = $logo.value === "logo_gnam" || $logo.value === "logo_none" ? 160 : 270;
             var secondLineBase = $logo.value === "logo_gnam" || $logo.value === "logo_none" ? 250 : 360;
@@ -436,13 +436,13 @@
             
             
             ctx.font = "bold 120px 'NeueHaasUnicaPro',Arial";
-            ctx.fillText($first.value, leftMargin + verticalLineWidth, firstLineBase, maxWidth );
+            ctx.fillText($first.value, leftMargin + verticalLineWidth, firstLineBase);
 
             ctx.font = "bold 70px 'NeueHaasUnicaPro',Arial";
-            ctx.fillText($last.value, leftMargin + verticalLineWidth, secondLineBase, maxWidth );
+            ctx.fillText($last.value, leftMargin + verticalLineWidth, secondLineBase);
 
             ctx.font = "50px 'NeueHaasUnicaPro',Arial"
-            ctx.fillText($pronouns.value, leftMargin + verticalLineWidth, thirdLineBase, maxWidth );
+            ctx.fillText($pronouns.value, leftMargin + verticalLineWidth, thirdLineBase);
 
             if ($cohort.value !== "none") {
                 ctx.fillStyle = $cohort.value;
@@ -450,7 +450,7 @@
             }
         } else {
             var verticalLineWidth = 0;
-            var maxWidth = 1200
+            //var maxWidth = 1200
 
             var firstLineBase = 160;
             var secondLineBase = 250;
@@ -460,15 +460,15 @@
             
             ctx.font = "bold 120px 'NeueHaasUnicaPro',Arial";
             var firstMeasurement = ctx.measureText($first.value).width
-            ctx.fillText($first.value, w - rightMargin - firstMeasurement, firstLineBase, maxWidth );
+            ctx.fillText($first.value, w - rightMargin - firstMeasurement, firstLineBase);
 
             ctx.font = "bold 70px 'NeueHaasUnicaPro',Arial";
             var lastMeasurement = ctx.measureText($last.value).width
-            ctx.fillText($last.value, w - rightMargin - lastMeasurement, secondLineBase, maxWidth );
+            ctx.fillText($last.value, w - rightMargin - lastMeasurement, secondLineBase);
 
             ctx.font = "50px 'NeueHaasUnicaPro',Arial"
             var pronounMeasurement = ctx.measureText($pronouns.value).width
-            ctx.fillText($pronouns.value, w - rightMargin - pronounMeasurement, thirdLineBase, maxWidth );
+            ctx.fillText($pronouns.value, w - rightMargin - pronounMeasurement, thirdLineBase);
 
             //if ($cohort.value !== "none") {
             //    ctx.fillStyle = $cohort.value;
