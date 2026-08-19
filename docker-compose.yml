@@ -11,5 +11,5 @@ services:
       dockerfile: Dockerfile
     container_name: zoombackgroundgenerator
     ports:
-      - "7000:80"
+      - "8080:80"
     restart: always
