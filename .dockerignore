@@ -1,4 +1,10 @@
+.git
 .gitignore
-license.txt
+node_modules
+dist
+test
 README.md
+license.txt
 Dockerfile
+Dockerfile.prod
+docker-compose.yml

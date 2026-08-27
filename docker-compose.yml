@@ -1,15 +1,25 @@
-# used for local development only
-# run docker-compose up --build to run the app locally on port 3000
-# Example: http://localhost:3000/?room=2210&timestamp=2017-11-01T07:00:00-05:00
-version: '3.8'
+# Local testing of the containerised build.
+#   docker compose up --build          -> http://localhost:8080/
+#   docker compose --profile prod up --build  -> http://localhost:8081/zoombackgroundgenerator/
+#
+# For day-to-day development use `npm run dev` instead — it has hot reload.
 
 services:
   zoombackgroundgenerator:
     build:
       context: .
-      # You can change this to Dockerfile.prod to local test building the production image
       dockerfile: Dockerfile
     container_name: zoombackgroundgenerator
     ports:
       - "8080:80"
+    restart: always
+
+  zoombackgroundgenerator-prod:
+    profiles: ["prod"]
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: zoombackgroundgenerator-prod
+    ports:
+      - "8081:80"
     restart: always
