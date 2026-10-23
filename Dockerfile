@@ -1,5 +1,5 @@
 # Serves the app from the domain root, e.g. http://localhost:8080/
-FROM node:24-alpine AS build
+FROM node:24.22.1-bookworm-slim AS build
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
